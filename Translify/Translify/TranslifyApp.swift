@@ -11,7 +11,7 @@ import SwiftUI
 struct TranslifyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CameraCaptureView()
         }
     }
 }

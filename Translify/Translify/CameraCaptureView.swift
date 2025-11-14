@@ -5,17 +5,21 @@ import SwiftUI
 struct CameraCaptureView: View {
     
     // 1. STATE
+    @State private var isAnimating: Bool = false
     @State private var showCameraPicker = false
     @State private var processingState: ProcessingState = .idle
     @State private var classificationResult: ClassificationResult?
     
     // State for the source selector
-    @State private var showSourceSelector = false
     @State private var pickerSourceType: UIImagePickerController.SourceType = .camera
     
     // Animation state for the button
     @State private var isButtonTapped = false
-
+    
+    // New tab selection state
+    @State private var selectedTab: Tab = .camera
+    enum Tab: Hashable { case camera, gallery }
+    
     /// Manages the different UI states of the capture flow.
     enum ProcessingState {
         case idle
@@ -24,83 +28,104 @@ struct CameraCaptureView: View {
     
     // Instance of the classifier
     private let imageClassifier = ImageClassifier()
-
+    
+    // MARK: - Background View
+    
+    @ViewBuilder
+    private func animatedBackground() -> some View {
+        RoundedRectangle(cornerRadius: 20, style: .continuous)
+            .fill(AngularGradient(colors: [.blue, .green, .red, .white], center: .center, angle:
+                    .degrees(isAnimating ? 360 : 0)))
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .ignoresSafeArea()
+            .onAppear {
+                withAnimation(Animation.linear(duration: 20).repeatForever(autoreverses: false)) {
+                    isAnimating = true
+                }
+            }
+    }
+    
     // 2. BODY
     var body: some View {
-        ZStack {
-            // Background
-            Color(.systemBackground).edgesIgnoringSafeArea(.all)
-            
-            VStack {
-                Spacer()
+        TabView(selection: $selectedTab) {
+            // Camera tab
+            ZStack {
+                animatedBackground()
                 
-                // Title
-                Text("CapWords")
-                    .font(.system(size: 34, weight: .bold, design: .rounded))
-                    .padding(.bottom, 20)
+                VStack {
+                    Spacer()
+                    
+                    // Title
+                    Text("Translify")
+                        .font(.system(size: 34, weight: .bold, design: .rounded))
+                        .padding(.bottom, 20)
+                    
+                    Text("Capture an object!")
+                        .foregroundStyle(.black)
+                        .font(.headline)
+                        .foregroundColor(.secondary)
+                    
+                    Spacer()
+                    
+                    // Camera Button
+                    cameraButton()
+                        .padding(.bottom, 60)
+                }
+                .padding()
                 
-                Text("Tap the button to capture an object.")
-                    .font(.headline)
-                    .foregroundColor(.secondary)
-
-                Spacer()
-                
-                // Camera Button
-                cameraButton()
-                    .padding(.bottom, 60)
+                // Show a progress indicator while processing
+                if processingState == .processing {
+                    ProgressView("Classifying...")
+                        .padding(30)
+                        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+                        .transition(.opacity.combined(with: .scale(scale: 0.8)))
+                }
             }
-            .padding()
+            .tag(Tab.camera)
+            .tabItem {
+                Image(systemName: "camera.fill")
+                Text("Camera")
+            }
             
-            // Show a progress indicator while processing
-            if processingState == .processing {
-                ProgressView("Classifying...")
-                    .padding(30)
-                    .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
-                    .transition(.opacity.combined(with: .scale(scale: 0.8)))
+            // Gallery tab
+            ZStack {
+                animatedBackground()
+            }
+            .tag(Tab.gallery)
+            .tabItem {
+                Image(systemName: "photo.on.rectangle")
+                Text("Gallery")
+            }
+            .animation(.default, value: processingState)
+            .sheet(isPresented: $showCameraPicker){
+                ImagePicker(sourceType: pickerSourceType) { image in
+                    processImage(image)
+                    showCameraPicker = false
+                    selectedTab = .camera // Return to camera tab after picking
+                }
             }
         }
-        .animation(.default, value: processingState)
-        
-        // 3. MODIFIERS
-        
-        // This dialog asks "Camera" or "Library"
-        .confirmationDialog("Choose an image source", isPresented: $showSourceSelector, titleVisibility: .visible) {
-            
-            // Camera Button
-            Button("Take Photo") {
-                self.pickerSourceType = .camera
-                self.showCameraPicker = true
-            }
-            
-            // Photo Library Button
-            Button("Choose from Library") {
-                self.pickerSourceType = .photoLibrary
-                self.showCameraPicker = true
+        .onChange(of: selectedTab) { newValue in
+            if newValue == .gallery {
+                pickerSourceType = .photoLibrary
+                showCameraPicker = true
             }
         }
-        
-        // This sheet presents the ImagePicker (Camera or Library)
-        .sheet(isPresented: $showCameraPicker) {
-            ImagePicker(sourceType: pickerSourceType) { image in
-                processImage(image)
-            }
-        }
-        
-        // This sheet presents the ResultsView
         .sheet(item: $classificationResult) { result in
             ResultsView(result: result)
         }
-    } // <-- BODY ENDS
-
+    }
+    
     // MARK: - Views
     
     /// The main camera button with tap animation.
     @ViewBuilder
     private func cameraButton() -> some View {
         Button {
-            // Trigger animation and open the *source selector*
+            // Always open camera directly
             triggerButtonAnimation()
-            showSourceSelector = true
+            pickerSourceType = .camera
+            showCameraPicker = true
         } label: {
             ZStack {
                 Circle()
@@ -153,10 +178,10 @@ struct CameraCaptureView: View {
             }
         }
     }
-} // <-- STRUCT ENDS
-
-struct CameraCaptureView_Previews: PreviewProvider {
-    static var previews: some View {
-        CameraCaptureView()
+    
+    struct CameraCaptureView_Previews: PreviewProvider {
+        static var previews: some View {
+            CameraCaptureView()
+        }
     }
 }

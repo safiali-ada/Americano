@@ -1,68 +1,73 @@
-Translify
+📸 Translify: Object Recognition & Instant Translation
+Translify is an iOS application that leverages on-device Machine Learning to identify real-world objects in real-time using the device's camera and instantly translates their names into Italian.
 
-The camera-powered iOS app that identifies objects using machine learning and instantly translates their names into Italian.
+✨ Core Features
+🔍 Object Detection: Utilizes a TensorFlow-trained Convolutional Neural Network (CNN), optimized and converted into the Core ML format for fast, on-device inference.
 
-🚀 What Translify Does
+🇮🇹 Instant Translation: Automatically translates the detected English object labels into Italian using a lightweight, local JSON/dictionary for quick, offline results.
 
-🔍 Detects objects using a TensorFlow-trained CNN converted to CoreML
+📱 On-Device Performance: The entire pipeline—from camera capture to detection and translation—runs fully on-device, ensuring fast inference speeds and prioritizing user privacy.
 
-📦 Shows class names, with optional bounding boxes
+📦 Visual Feedback: Provides clear class names, with optional bounding boxes shown around the detected objects.
 
-🇮🇹 Translates detected English labels into Italian using a local JSON/dictionary
+🧠 Architecture & Technology Stack
+Translify is built natively for optimal performance on the Apple ecosystem.
 
-📱 Runs fully on-device for fast, private inference
+Swift / iOS: The primary language and platform, ensuring smooth, native app performance.
 
-🧠 Architecture
+Core ML: Powers the efficient execution of the trained Machine Learning model directly on the device.
 
-Swift / iOS – Built natively for smooth performance
+Vision Framework: Apple's dedicated framework for handling image processing tasks and decoding the model's output into manageable bounding box coordinates and confidence scores.
 
-Core ML – Powers the on-device model inference
-
-Vision Framework – Handles image processing + bounding box decoding
-
-Translation Module – Maps English → Italian with a lightweight local dataset
+Translation Module: A custom module managing the English-to-Italian label mapping via a local dataset.
 
 📋 Requirements
+To build and run Translify, you will need:
 
-Xcode (recent version)
+Xcode: A recent, stable version is required.
 
-iOS target: 13+ (recommended)
+iOS Target: Recommended minimum of iOS 13+.
 
-.mlmodel included in the project
+.mlmodel: The Core ML model file must be included in the project resources.
 
-Physical iPhone for camera + inference performance
+Device: A physical iPhone is necessary to utilize the camera and experience optimal inference performance.
 
-🛠️ How to Build & Run
+🛠️ Build & Run Instructions
+Follow these steps to get the app running on your device:
 
 Clone the repository:
 
+Bash
+
 git clone https://github.com/safiali-ada/Americano.git
+Open the Project: Open the cloned project directory in Xcode.
 
+Verify Model Inclusion: Ensure the necessary .mlmodel file is correctly placed within the Resources folder of the project.
 
-Open the project in Xcode
+Run on Device: Select your physical iPhone as the target and run the app.
 
-Make sure the .mlmodel file is in the Resources folder
+Usage:
 
-Run the app on a real device
+Allow camera access when prompted.
 
-Allow camera access
+Point the camera at any object.
 
-Point the camera at an object → get detection → see the Italian translation
+View the real-time object detection and the corresponding Italian translation!
 
-✨ Future Enhancements
+✨ Future Development
+We are planning the following enhancements to expand Translify's capabilities:
 
-🌍 More language options
+🌍 Language Expansion: Adding support for more translation language options.
 
-☁️ Switch between offline and cloud-based translation
+☁️ Translation Modes: Implementing a toggle to switch between the local, offline dictionary and a potentially more comprehensive cloud-based translation service.
 
-🏋️ Custom training for new object categories
+🏋️ Custom Training: Tools or guides for users to train and integrate new object categories into the model.
 
-⚡ Optimized detection for better battery + performance
+⚡ Optimization: Further performance enhancements focused on battery efficiency and faster detection speeds.
 
-🔊 Audio output (“speak the translation”)
+🔊 Audio Output: A feature to audibly "speak the translation" for learning purposes.
 
-🖼️ Detection history, snapshots, and export options
+🖼️ History & Export: Functionality for detection history, taking snapshots, and exporting the results.
 
 📄 License
-
-This project is released under the MIT License.
+This project is open-source and released under the MIT License.

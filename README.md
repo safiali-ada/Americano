@@ -1,64 +1,68 @@
 Translify
 
-Translify is a machine-learning powered iOS application that detects objects using a Core ML model and translates the identified class names into Italian.
+The camera-powered iOS app that identifies objects using machine learning and instantly translates their names into Italian.
 
-Functionality
+🚀 What Translify Does
 
-Object detection using a CNN model trained in TensorFlow and converted to Core ML.
+🔍 Detects objects using a TensorFlow-trained CNN converted to CoreML
 
-Display of detected class names, optionally with bounding boxes.
+📦 Shows class names, with optional bounding boxes
 
-Translation of English labels into Italian using a local JSON or dictionary file.
+🇮🇹 Translates detected English labels into Italian using a local JSON/dictionary
 
-Architecture
+📱 Runs fully on-device for fast, private inference
 
-Swift / iOS – Implementation using SwiftUI or UIKit.
+🧠 Architecture
 
-Core ML – On-device inference using a converted .mlmodel.
+Swift / iOS – Built natively for smooth performance
 
-Vision – Used for model requests and bounding box decoding (if enabled).
+Core ML – Powers the on-device model inference
 
-Translation Module – Local English → Italian mapping system.
+Vision Framework – Handles image processing + bounding box decoding
 
-Requirements
+Translation Module – Maps English → Italian with a lightweight local dataset
 
-Recent version of Xcode
+📋 Requirements
 
-iOS target (e.g., iOS 13+)
+Xcode (recent version)
 
-Core ML .mlmodel file included in the project
+iOS target: 13+ (recommended)
 
-Physical iOS device for camera functionality and proper inference performance
+.mlmodel included in the project
 
-How to Build & Run
+Physical iPhone for camera + inference performance
+
+🛠️ How to Build & Run
 
 Clone the repository:
 
 git clone https://github.com/safiali-ada/Americano.git
 
 
-Open the project in Xcode.
+Open the project in Xcode
 
-Ensure the .mlmodel file is added to the project resources.
+Make sure the .mlmodel file is in the Resources folder
 
-Build and run on a physical iOS device.
+Run the app on a real device
 
-Grant camera access when requested.
+Allow camera access
 
-Capture an image to view the detected object and its translated label.
+Point the camera at an object → get detection → see the Italian translation
 
-Future Improvements
+✨ Future Enhancements
 
-Support for additional languages.
+🌍 More language options
 
-Optional cloud-based translation in addition to offline mode.
+☁️ Switch between offline and cloud-based translation
 
-Custom model training for new object classes.
+🏋️ Custom training for new object categories
 
-Performance optimizations for lower power consumption.
+⚡ Optimized detection for better battery + performance
 
-UI additions such as audio output, detection history, or snapshot export.
+🔊 Audio output (“speak the translation”)
 
-License
+🖼️ Detection history, snapshots, and export options
 
-This project is licensed under the MIT License.
+📄 License
+
+This project is released under the MIT License.

@@ -1,65 +1,64 @@
-##Translify
+Translify
 
-A machine-learning powered iOS application that detects objects and translates their identified names into Italian.
+Translify is a machine-learning powered iOS application that detects objects using a Core ML model and translates the identified class names into Italian.
 
+Functionality
 
-##Functionality
+Object detection using a CNN model trained in TensorFlow and converted to Core ML.
 
-Object Detection using a CNN model trained on TensorFlow and converted to Core ML.
+Display of detected class names, optionally with bounding boxes.
 
-Bounding Boxes to display detected objects (if implemented).
+Translation of English labels into Italian using a local JSON or dictionary file.
 
-Translation Module that maps English class labels to Italian using a local JSON or dictionary file.
+Architecture
 
-##Architecture / Key Components
+Swift / iOS – Implementation using SwiftUI or UIKit.
 
-Swift / iOS – App built using Swift (SwiftUI or UIKit).
+Core ML – On-device inference using a converted .mlmodel.
 
-Core ML – Handles on-device inference using the converted .mlmodel.
+Vision – Used for model requests and bounding box decoding (if enabled).
 
-Vision Framework – Optional integration for bounding-box decoding and model handling.
+Translation Module – Local English → Italian mapping system.
 
-Translation Module – Local lookup system for English → Italian translation.
+Requirements
 
-##Requirements
+Recent version of Xcode
 
-Xcode (recent stable version)
+iOS target (e.g., iOS 13+)
 
-iOS Target: e.g., iOS 13+
+Core ML .mlmodel file included in the project
 
-Core ML .mlmodel included in the project
+Physical iOS device for camera functionality and proper inference performance
 
-Physical iOS device for full camera + ML performance
-
-##How to Build & Run
+How to Build & Run
 
 Clone the repository:
 
 git clone https://github.com/safiali-ada/Americano.git
 
 
-Open the project in Xcode (.xcodeproj or .xcworkspace).
+Open the project in Xcode.
 
-Ensure the Core ML model is included in the Resources folder.
+Ensure the .mlmodel file is added to the project resources.
 
-Build and run the application on a real iOS device.
+Build and run on a physical iOS device.
 
-Grant camera permission when requested.
+Grant camera access when requested.
 
-Capture an image and view the detected class along with its Italian translation.
+Capture an image to view the detected object and its translated label.
 
-##Future Improvements
+Future Improvements
 
-Additional language support.
+Support for additional languages.
 
-Option to switch between offline translation and API-based translation.
+Optional cloud-based translation in addition to offline mode.
 
-Custom model training for new object categories.
+Custom model training for new object classes.
 
-Performance optimizations for lower FPS or reduced power usage.
+Performance optimizations for lower power consumption.
 
-UI enhancements such as audio output, detection history, or image snapshots.
+UI additions such as audio output, detection history, or snapshot export.
 
-##License
+License
 
-This project is released under the MIT License.
+This project is licensed under the MIT License.

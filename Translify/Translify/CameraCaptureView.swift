@@ -33,18 +33,31 @@ struct CameraCaptureView: View {
     
     @ViewBuilder
     private func animatedBackground() -> some View {
-        RoundedRectangle(cornerRadius: 20, style: .continuous)
-            .fill(AngularGradient(colors: [.blue, .green, .red, .white], center: .center, angle:
-                    .degrees(isAnimating ? 360 : 0)))
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .ignoresSafeArea()
-            .onAppear {
-                withAnimation(Animation.linear(duration: 20).repeatForever(autoreverses: false)) {
-                    isAnimating = true
-                }
-            }
+        ZStack {
+            // Light base color
+            Color(.systemBackground)
+                .ignoresSafeArea()
+
+            // Floating blob 1
+            Circle()
+                .fill(Color.blue.opacity(0.35))
+                .frame(width: 450, height: 450)
+                .blur(radius: 140)
+                .offset(x: isAnimating ? 140 : -150, y: isAnimating ? -120 : 130)
+                .animation(.easeInOut(duration: 18).repeatForever(autoreverses: true), value: isAnimating)
+
+            // Floating blob 2
+            Circle()
+                .fill(Color.cyan.opacity(0.25))
+                .frame(width: 380, height: 380)
+                .blur(radius: 120)
+                .offset(x: isAnimating ? -160 : 150, y: isAnimating ? 140 : -130)
+                .animation(.easeInOut(duration: 20).repeatForever(autoreverses: true), value: isAnimating)
+        }
+        .onAppear { isAnimating = true }
     }
-    
+
+
     // 2. BODY
     var body: some View {
         TabView(selection: $selectedTab) {

@@ -2,8 +2,6 @@ import Foundation
 
 struct TranslationLibrary {
     
-    // Define your translations here.
-    // The Key is your Model's output (English), the Value is the Italian translation.
     static let dictionary: [String: String] = [
         "airplane": "Aereo",
         "bird": "Uccello",
